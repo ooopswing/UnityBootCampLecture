@@ -1,0 +1,14 @@
+C:\Users\wanle\OneDrive\Desktop\ConsoleShootingGame\ConsoleShootingGame\ConsoleShootingGame\bin\Release\net8.0\ConsoleShootingGame.exe
+C:\Users\wanle\OneDrive\Desktop\ConsoleShootingGame\ConsoleShootingGame\ConsoleShootingGame\bin\Release\net8.0\ConsoleShootingGame.deps.json
+C:\Users\wanle\OneDrive\Desktop\ConsoleShootingGame\ConsoleShootingGame\ConsoleShootingGame\bin\Release\net8.0\ConsoleShootingGame.runtimeconfig.json
+C:\Users\wanle\OneDrive\Desktop\ConsoleShootingGame\ConsoleShootingGame\ConsoleShootingGame\bin\Release\net8.0\ConsoleShootingGame.dll
+C:\Users\wanle\OneDrive\Desktop\ConsoleShootingGame\ConsoleShootingGame\ConsoleShootingGame\bin\Release\net8.0\ConsoleShootingGame.pdb
+C:\Users\wanle\OneDrive\Desktop\ConsoleShootingGame\ConsoleShootingGame\ConsoleShootingGame\obj\Release\net8.0\ConsoleShootingGame.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\wanle\OneDrive\Desktop\ConsoleShootingGame\ConsoleShootingGame\ConsoleShootingGame\obj\Release\net8.0\ConsoleShootingGame.AssemblyInfoInputs.cache
+C:\Users\wanle\OneDrive\Desktop\ConsoleShootingGame\ConsoleShootingGame\ConsoleShootingGame\obj\Release\net8.0\ConsoleShootingGame.AssemblyInfo.cs
+C:\Users\wanle\OneDrive\Desktop\ConsoleShootingGame\ConsoleShootingGame\ConsoleShootingGame\obj\Release\net8.0\ConsoleShootingGame.csproj.CoreCompileInputs.cache
+C:\Users\wanle\OneDrive\Desktop\ConsoleShootingGame\ConsoleShootingGame\ConsoleShootingGame\obj\Release\net8.0\ConsoleShootingGame.dll
+C:\Users\wanle\OneDrive\Desktop\ConsoleShootingGame\ConsoleShootingGame\ConsoleShootingGame\obj\Release\net8.0\refint\ConsoleShootingGame.dll
+C:\Users\wanle\OneDrive\Desktop\ConsoleShootingGame\ConsoleShootingGame\ConsoleShootingGame\obj\Release\net8.0\ConsoleShootingGame.pdb
+C:\Users\wanle\OneDrive\Desktop\ConsoleShootingGame\ConsoleShootingGame\ConsoleShootingGame\obj\Release\net8.0\ConsoleShootingGame.genruntimeconfig.cache
+C:\Users\wanle\OneDrive\Desktop\ConsoleShootingGame\ConsoleShootingGame\ConsoleShootingGame\obj\Release\net8.0\ref\ConsoleShootingGame.dll
