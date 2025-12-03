@@ -1,0 +1,14 @@
+C:\Sharing Files\MonsterHunting2\MonsterHunting2\bin\Debug\net8.0\MonsterHunting2.exe
+C:\Sharing Files\MonsterHunting2\MonsterHunting2\bin\Debug\net8.0\MonsterHunting2.deps.json
+C:\Sharing Files\MonsterHunting2\MonsterHunting2\bin\Debug\net8.0\MonsterHunting2.runtimeconfig.json
+C:\Sharing Files\MonsterHunting2\MonsterHunting2\bin\Debug\net8.0\MonsterHunting2.dll
+C:\Sharing Files\MonsterHunting2\MonsterHunting2\bin\Debug\net8.0\MonsterHunting2.pdb
+C:\Sharing Files\MonsterHunting2\MonsterHunting2\obj\Debug\net8.0\MonsterHunting2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Sharing Files\MonsterHunting2\MonsterHunting2\obj\Debug\net8.0\MonsterHunting2.AssemblyInfoInputs.cache
+C:\Sharing Files\MonsterHunting2\MonsterHunting2\obj\Debug\net8.0\MonsterHunting2.AssemblyInfo.cs
+C:\Sharing Files\MonsterHunting2\MonsterHunting2\obj\Debug\net8.0\MonsterHunting2.csproj.CoreCompileInputs.cache
+C:\Sharing Files\MonsterHunting2\MonsterHunting2\obj\Debug\net8.0\MonsterHunting2.dll
+C:\Sharing Files\MonsterHunting2\MonsterHunting2\obj\Debug\net8.0\refint\MonsterHunting2.dll
+C:\Sharing Files\MonsterHunting2\MonsterHunting2\obj\Debug\net8.0\MonsterHunting2.pdb
+C:\Sharing Files\MonsterHunting2\MonsterHunting2\obj\Debug\net8.0\MonsterHunting2.genruntimeconfig.cache
+C:\Sharing Files\MonsterHunting2\MonsterHunting2\obj\Debug\net8.0\ref\MonsterHunting2.dll
