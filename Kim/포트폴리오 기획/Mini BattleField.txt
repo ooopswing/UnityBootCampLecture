@@ -1,0 +1,94 @@
+1] 기초 프레임워크 (Core Foundation) : 플레이어의 기본 움직임과 네트워크 환경을 구축
+
+ 1. 플레이어 동기화	 : NetworkPlayerController.cs	
+   1) 로컬 예측(Prediction): Update()에서 로컬 입력(Input)을 받아 Transform을 즉시 이동. 
+       서버에는 ServerRpc를 통해 입력값/위치 전송
+   2) 원격 보간(Interpolation): IsOwner가 아닐 때, 
+       Vector3.Lerp(Current, NetworkVariable.Value, Time.deltaTime * Rate)를 사용하여 
+       부드러운 움직임 구현
+
+ 2.  FPS 컨트롤러 : WeaponController.cs	
+   1) ADS (조준): Input.GetButton("Fire2")를 감지하여 카메라의 FieldOfView(FOV)를 변경하고, 
+      무기 모델링을 Vector3.Lerp로 이동시키는 함수
+   2) 재장전: 애니메이션 이벤트 콜백을 받아 NetworkVariable<int> currentAmmo를 갱신하는 함수
+
+3. 팀 및 상태 관리 : PlayerNetState.cs	
+   1) 팀 ID: NetworkVariable<int> TeamID 선언 및 서버에서 1 또는 2 할당
+
+4. Netcode 설정 : NetworkManagerInitializer.cs	
+   1 )연결 로직: StartHost(), StartClient() 함수 구현. Unity Relay를 통해 접속 코드를 주고받는 로직 
+      (CreateAllocationAsync, JoinAllocationAsync)
+
+2] AI 및 거점 시스템 (AI & Capture) : 전장의 핵심인 거점 점령 규칙과 AI 봇의 행동을 구현
+
+ 1. AI 봇 이동 : AIBotController.cs
+   1) 대상 설정: ConquestManager에서 가장 가까운 미점령 거점(ConquestPoint)을 목표로 설정하는 함수
+   2) 이동: UnityEngine.AI.NavMeshAgent.SetDestination(TargetPosition) 호출
+   3) 교전: 플레이어를 감지했을 때(Physics.Raycast) 사격 로직 (WeaponController 호출)으로 전환하는 
+      상태 머신(FSM) 구현
+
+ 2. 거점 점령 로직 : ConquestPoint.cs
+   1) 인원 카운트: OnTriggerEnter/Exit에서 Collider의 TeamID를 확인하여 private int playersFromA, 
+       playersFromB 변수 갱신 (서버에서만)
+   2) 진행도 계산: NetworkVariable<float> captureProgress를 (playersFromB - playersFromA)에 비례하여 
+      Time.deltaTime으로 갱신 (서버 권한)
+
+ 3. 팀 스코어 (티켓) : ConquestManager.cs
+   1) 변수: NetworkVariable<int> teamATickets, teamBTickets 선언
+   2) 갱신: InvokeRepeating("UpdateTickets", 1f, 1f)를 사용하여 1초마다 ConquestPoint.ownerTeam 상태에 
+       따라 티켓을 차감하는 서버 함수 구현
+   3) 승리 조건: 티켓이 0 이하일 때 ClientRpc를 호출하여 게임 종료 화면을 표시
+
+ 4. UI 연동 : CaptureUI.cs
+   1) HUD 업데이트: ConquestPoint.ownerTeam.OnValueChanged 및 captureProgress.OnValueChanged 
+      이벤트에 Slider.value 및 Image.color를 연결하는 구독 로직
+
+3] 파괴 및 물리 (Destruction & Physics) : 핵심 시스템 구현
+
+ 1. 탄도학 구현 : Projectile.cs
+  1) 궤적 계산: FixedUpdate에서 velocity += Physics.gravity * Time.fixedDeltaTime을 적용하고, 
+      Raycast로 터널링을 방지하며 다음 위치까지 충돌 체크.
+  2) 데미지 전달: 충돌 시 WeaponController의 ProcessHit() 함수 호출
+
+ 2. 환경 파괴: DestructibleWall.cs
+  1) 데미지 함수: [ServerRpc] public void TakeDamage(...) 구현
+  2) 파괴 로직: HP가 0이 되면 wholeWall.SetActive(false)하고 fracturedWall.SetActive(true)를 
+     [ClientRpc]로 호출하여 동기화
+  3) 물리 적용: Rigidbody.AddExplosionForce()를 사용하여 파편이 튀어나가게 처리
+
+ 3. 수류탄/로켓: ExplosiveProjectile.cs
+  1) 폭발 범위: Physics.OverlapSphere(ExplosionPoint, Radius)를 사용하여 범위 내 모든 IDamageable 
+     인터페이스를 가진 오브젝트를 찾음
+  2) 파괴 연동: DestructibleWall이 범위 안에 있으면 TakeDamage()를 호출하여 파괴
+
+ 4. 파편 최적화: FragmentOptimizer.cs
+  1) IEnumerator OptimizeRoutine() 코루틴 구현. 폭발 후 3초 뒤 Rigidbody.isKinematic = true로 설정하고 
+     Collider를 비활성화하여 CPU 물리 연산을 중단시키는 로직
+
+4. 폴리싱 및 영상 제작 (Polishing & Optimization)성능과 비주얼을 최종 점검, 완성도를 높이는 단계
+
+ 1. VFX 연동 및 풀링: ObjectPooler.cs
+  1) 풀링 시스템: 탄피, 폭발 이펙트, 탄환 궤적(Projectile) 프리팹을 미리 생성하고 재활용하는 
+      Generic ObjectPooler<T> 클래스 구현
+  2) VFX Graph: C# 코드에서 VFXManager.PlayVFX(VFXType, Position) 함수를 호출하여 폭발 이펙트 
+     제어
+
+ 2. 렌더링 최적화GPU: Resident Drawer (설정)
+  1) 활성화: Project Settings -> Graphics에서 GPU Resident Drawer를 활성화하고, 파편 메쉬들이 
+     동일 머티리얼을 공유하도록 설정 (CPU 드로우콜 최소화)
+
+ 3. 핑 보정 마무리: NetworkTransform (컴포넌트)
+  1) Interpolation: NetworkTransform 컴포넌트의 Interpolation 옵션을 켜서 원격 플레이어의 움직임 끊김 
+     현상을 방지
+
+ 4. 포트폴리오 녹화: Unity Profiler (도구)
+  1) 성능 검증: 10인+AI가 교전하는 동안 프로파일러를 캡처하여 CPU와 GPU 사용률 스크린샷을 포트폴리오에 
+      첨부 (기술력 증명).
+
+
+
+
+
+
+
+
